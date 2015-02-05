@@ -1,0 +1,7 @@
+daughter(X,X).
+
+daughter(bob,tom).
+daughter(bob,ann).
+daughter(rosy,ann).
+daughter(tom,ann).
+
