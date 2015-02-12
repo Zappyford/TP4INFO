@@ -1,0 +1,2 @@
+:- ['/home-reseau/guroy/Documents/enseignements/4INFO/TP4INFO/AcqDeCo/TP2/exemple-train/aleph'].
+:- read_all(train), set(recordfile,'/dev/null'), set(verbose,0), induce.
