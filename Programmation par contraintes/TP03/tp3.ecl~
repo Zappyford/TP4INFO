@@ -1,0 +1,12 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Contraintes 4INFO %%
+%%       TP 03       %%
+%%   Guillaume ROY   %%
+%%   Antoine CHENON  %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+:-lib(ic).
+:-lib(ic_symbolic).
+
+%% Question 2.1 %%
+

@@ -1,0 +1,106 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Contraintes 4INFO %%
+%%       TP 03       %%
+%%   Guillaume ROY   %%
+%%   Antoine CHENON  %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+:-lib(ic).
+:-lib(ic_symbolic).
+%:-lib(arrays).
+
+%% Définition des domaines
+:- local domain(machine(m1,m2)).
+
+%% Question 3.1 %%
+%% taches(?Taches) : unifie Taches au tableau des tâches
+taches([](tache(3,[], m1, _),
+		tache(8,[],m1, _),
+		tache(8,[4,5],m1, _),
+		tache(6,[],m2, _),
+		tache(3,[1],m2, _),
+		tache(4,[1,7],m1, _),
+		tache(8,[3,5],m1, _),
+		tache(6,[4],m2, _),
+		tache(6,[6,7],m2, _),
+		tache(6,[9,12],m2, _),
+		tache(3,[1],m2, _),
+		tache(6,[7,8],m2, _))).
+
+%% Question 3.2
+%% affiche(+Taches) affiche les taches
+affiche(Taches) :-
+				dim(Taches, [Dim]), 
+				(for(I, 1, Dim), param(Taches)
+					do
+						tache(Duree, Nom, Machine, _) is Taches[I],
+						writeln(X)
+				).
+
+%% Question 3.3
+%% domaines(+Taches, ?Fin)
+domaines(Taches,Fin) :-
+		(foreachelem(tache(Duree,_Noms,_Machine,Debut),Taches), param(Fin)
+		do
+		(Debut #>= 0,
+		Debut + Duree #< Fin)). 
+
+%% Question 3.4
+%% getVarList(+Taches,?Fin,?List) recupère la liste des variables
+getVarList(Taches, Fin, List):-
+			(foreachelem(tache(_Duree,_Noms,_Machine,Debut),Taches),
+			fromto([Fin],In, Out, List)
+			do
+				Out = [Debut| In]
+			).
+
+%% Question 3.5
+%% solve(?Taches, ?Fin) trouve un ordonnancement
+solve(Taches,Fin) :-
+		taches(Taches),
+		domaines(Taches,Fin),
+		getVarList(Taches,Fin,Liste),
+		labeling(Liste).
+
+%% Question 3.6
+%% precedence(+Taches)
+precedence(Taches) :-
+(foreachelem(tache(_Duree,Noms,_Machine,Debut),Taches), param(Taches)
+	do
+	(
+	foreach(X,Noms), param(Taches,Debut)
+		do
+		(
+		tache(Duree2, _Noms2, _Machine2, Debut2) is Taches[X],
+		Debut #>= Duree2 + Debut2
+		)
+	)
+).
+
+%% Question 3.7
+%% conflits(+Taches)
+
+conflits(Taches):-
+(
+	for(I, 1, 12),
+	param(Taches)
+	do
+	(
+		for(J, I+1, 12),
+		param(Taches), param(I)
+		do
+			tache(Duree1, _, Machine1, Debut1) is Taches[I],
+			tache(Duree2, _, Machine2, Debut2) is Taches[J],
+			(Machine1 &= Machine2) => (Debut2#>=Debut1+Duree1 or Debut2#=<Debut1-Duree2)
+	)
+).
+
+
+
+
+
+
+
+
+
+
