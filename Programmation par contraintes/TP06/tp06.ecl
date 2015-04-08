@@ -93,7 +93,18 @@ solve2(Poids, Places, Moment):-
   contraintes(Poids, Places, Moment),
   labeling(Places).
   
-  
+%% Question 6.4
+solve3(Poids, Places, Moment):-
+  data(Poids, Places),
+  contraintes(Poids, Places, Moment),
+  labeling(Places),
+	search(Places,0,most_constrained,indomain_min,complete,[]).
+
+
+
+
+
+
 %% Tests
 /*
 Question 6.2 :
@@ -119,7 +130,69 @@ Pl = [](-6, -5, 2, 8, 4, -7, -2, -8, 7, 5)
 M = 2858
 Yes (0.14s cpu, solution 4, maybe more) ? 
 
+Question 6.3 :
 
+[eclipse 2]: solve2(P,Pl,Mo).
+lists.eco  loaded in 0.01 seconds
+
+P = [](24, 39, 85, 60, 165, 6, 32, 123, 7, 14)
+Pl = [](-6, -5, -4, -8, 2, 5, 3, 6, -7, 1)
+Mo = 2416
+Yes (0.14s cpu, solution 1, maybe more) ? ;
+
+P = [](24, 39, 85, 60, 165, 6, 32, 123, 7, 14)
+Pl = [](-6, -5, -1, 8, 5, 7, 3, -8, -7, 1)
+Mo = 2914
+Yes (0.17s cpu, solution 2, maybe more) ? ;
+
+P = [](24, 39, 85, 60, 165, 6, 32, 123, 7, 14)
+Pl = [](-6, -5, 1, -8, -2, 6, 5, 7, -7, 4)
+Mo = 2396
+Yes (0.17s cpu, solution 3, maybe more) ? 
+
+Question 6.4
+[eclipse 3]: minimize(solve2(P,Pl,M),M).
+Found a solution with cost 2416
+Found a solution with cost 2396
+Found a solution with cost 2382
+Found a solution with cost 2226
+Found a solution with cost 2176
+Found a solution with cost 2146
+Found a solution with cost 2118
+Found a solution with cost 1906
+Found a solution with cost 1896
+Found a solution with cost 1796
+Found a solution with cost 1668
+Found a solution with cost 1604
+Found no solution with cost -1.0Inf .. 1603
+
+P = [](24, 39, 85, 60, 165, 6, 32, 123, 7, 14)
+Pl = [](-3, 1, -2, -6, -1, 4, 3, 5, -5, 2)
+M = 1604
+Yes (2.34s cpu)
+
+Version 1 :
+[eclipse 7]: minimize(solve3(P,Pl,M),M).
+Found a solution with cost 2416
+Found a solution with cost 2396
+Found a solution with cost 2382
+Found a solution with cost 2226
+Found a solution with cost 2176
+Found a solution with cost 2146
+Found a solution with cost 2118
+Found a solution with cost 1906
+Found a solution with cost 1896
+Found a solution with cost 1796
+Found a solution with cost 1668
+Found a solution with cost 1604
+Found no solution with cost -1.0Inf .. 1603
+
+P = [](24, 39, 85, 60, 165, 6, 32, 123, 7, 14)
+Pl = [](-3, 1, -2, -6, -1, 4, 3, 5, -5, 2)
+M = 1604
+Yes (2.38s cpu)
+
+Version 2 :
 
 */
 
